@@ -21,3 +21,11 @@ Project portfolio powered by Go.
   - **Skills Demonstrated:** WebSockets, real-time data handling, frontend-backend integration.
   - **Tech Stack:** Golang, Gorilla WebSocket, Angular or React for frontend, Redis for managing sessions.
 
+## Additional Considerations
+
+- Documentation: Ensure each project has thorough documentation, including setup instructions, usage examples, and API references. This demonstrates professionalism and attention to detail.
+- Testing: Implement comprehensive unit and integration tests to showcase your commitment to quality and reliability.
+- CI/CD: Set up continuous integration and deployment pipelines using tools like GitHub Actions, Jenkins, or CircleCI.
+- Code Quality: Use linters, formatters, and follow best practices to maintain high code quality.
+- Architecture Diagrams: Include architecture diagrams for complex projects to illustrate your design thinking and system understanding.
+- ReadMe Files: Write detailed README files for each project, explaining the purpose, features, and how to run the project locally.
