@@ -4,22 +4,46 @@ Project portfolio powered by Go.
 
 ## Projects
 
-- [ ] REST API
-  - **Description:** Build a RESTful API for a simple blog or to-do application.
+- [ ] RESTful API with Go and Gin
+  - **Description:** Develop a RESTful API for a simple task management application.
   - **Skills Demonstrated:** Basic CRUD operations, routing, middleware, authentication, and testing.
-  - **Tech Stack:** Golang, Gorilla Mux, JWT for authentication, GORM for ORM, PostgreSQL.
+  - **Tech Stack:** Golang, Gin, JWT for authentication, GORM for ORM, PostgreSQL, Docker.
+- [ ] Concurrent Web Scraper
+  - **Description:** Implement a web scraper that fetches and processes data from multiple websites concurrently.
+  - **Skills Demonstrated:** Efficient concurrency handling, error handling, data storage in a database.
+  - **Tech Stack:** Golang, Goroutines, Channels, SQLite/ElasticSearch.
+- [ ] GraphQL API
+  - **Description:** Create a GraphQL API for a blogging platform.
+  - **Skills Demonstrated:** Queries and mutations for users, posts, comments, and likes.
+  - **Tech Stack:** Golang, GraphQL (using gqlgen or similar library), PostgreSQL, Docker.
 - [ ] Microservices Architecture
   - **Description:** Develop a set of microservices for an e-commerce platform (e.g., user service, product service, order service).
   - **Skills Demonstrated:** Microservices design, communication between services (gRPC or HTTP), containerization (Docker), orchestration (Kubernetes), and service discovery.
   - **Tech Stack:** Golang, Docker, Kubernetes, gRPC/Protobuf, Kafka or RabbitMQ, PostgreSQL.
-- [ ] Concurrency and Parallelism Showcase
-  - **Description:** Create a system that processes large data sets concurrently, such as a web scraper or data processor.
-  - **Skills Demonstrated:** Golang's concurrency model (goroutines, channels), synchronization (mutexes, wait groups), performance optimization.
-  - **Tech Stack:** Golang, PostgreSQL or MongoDB for storing data, Redis for caching.
-- [ ] Real-time Web Application
-  - **Description:** Develop a real-time chat application or a live dashboard.
-  - **Skills Demonstrated:** WebSockets, real-time data handling, frontend-backend integration.
-  - **Tech Stack:** Golang, Gorilla WebSocket, Angular or React for frontend, Redis for managing sessions.
+- [ ] URL Shortener Service
+  - **Description:** Create a service that shortens long URLs and redirects to the original URL.
+  - **Skills Demonstrated:** URL creation, URL redirection, analytics on link usage.
+  - **Tech Stack:** Golang, Redis (for storage), MongoDB, Docker, Gin.
+- [ ] Social Media Integration
+  - **Description:** Build a service that integrates with social media APIs (e.g., Twitter, Facebook) to fetch and analyze data.
+  - **Skills Demonstrated:** OAuth authentication, API rate limiting, data analysis and storage.
+  - **Tech Stack:** Golang, OAuth, MongoDB, Docker.
+- [ ] Real-time Chat Application
+  - **Description:** Develop a real-time chat application with WebSocket support.
+  - **Skills Demonstrated:** WebSockets, real-time messaging, group chats, message history.
+  - **Tech Stack:** Golang, Gorilla WebSocket, Angular or React for frontend, Redis (for message storage and pub/sub), Docker.
+- [ ] Job Queue System
+  - **Description:** Implement a job queue system for handling background tasks.
+  - **Skills Demonstrated:** Task scheduling, retry mechanism, task prioritization.
+  - **Tech Stack:** Golang, Redis/RabbitMQ, PostgreSQL, Docker.
+- [ ] Event-Driven System
+  - **Description:** Develop an event-driven application, such as a notification system.
+  - **Skills Demonstrated:** Event producers and consumers, event storage, real-time notifications.
+  - **Tech Stack:** Golang, Kafka/NATS, MongoDB, Docker.
+- [ ] DevOps Tooling
+  - **Description:** Build a tool to assist with DevOps tasks, such as a CI/CD pipeline manager.
+  - **Skills Demonstrated:** Pipeline configuration, job execution, monitoring and logging.
+  - **Tech Stack:** Golang, Docker, Kubernetes, Jenkins/Travis CI, ELK Stack.
 
 ## Additional Considerations
 
