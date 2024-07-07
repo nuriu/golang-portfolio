@@ -5,3 +5,6 @@ Thumbs.db
 # Go workspace file
 go.work
 go.work.sum
+
+# Binaries
+bin/
