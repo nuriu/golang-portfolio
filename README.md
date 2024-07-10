@@ -39,7 +39,7 @@ Project portfolio powered by Go.
 - [ ] Event-Driven System
   - **Description:** Develop an event-driven application, such as a notification system.
   - **Skills Demonstrated:** Event producers and consumers, event storage, real-time notifications.
-  - **Tech Stack:** Golang, Kafka/NATS, MongoDB, Docker.
+  - **Tech Stack:** Golang, Kafka/NATS, CouchBase, Docker.
 - [ ] DevOps Tooling
   - **Description:** Build a tool to assist with DevOps tasks, such as a CI/CD pipeline manager.
   - **Skills Demonstrated:** Pipeline configuration, job execution, monitoring and logging.

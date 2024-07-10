@@ -1,18 +1,19 @@
-# EditorConfig is awesome: https://EditorConfig.org
-
-# top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file
 [*]
+charset = utf-8
 end_of_line = lf
 insert_final_newline = true
+trim_trailing_whitespace = true
 
-# 4 space indentation
-[*.go]
+[{*.go,Makefile,.gitmodules,go.mod,go.sum}]
 indent_style = tab
 indent_size = 4
 
-[Makefile]
+[*.md]
 indent_style = tab
+trim_trailing_whitespace = false
 
+[*.{yml,yaml,json}]
+indent_style = space
+indent_size = 2

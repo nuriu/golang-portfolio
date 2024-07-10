@@ -1,5 +1,5 @@
 build:
-	@go build -o bin/rest-api cmd/main.go
+	@go build -o bin/rest-api cmd/app/main.go
 
 test:
 	@go test -v ./...

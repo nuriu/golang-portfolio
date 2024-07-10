@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"rest-api/configs"
 )
 
 func main() {
@@ -12,7 +13,8 @@ func main() {
 		fmt.Fprintf(w, "hello /")
 	})
 
-	if err := http.ListenAndServe("localhost:8080", mux); err != nil {
+	addr := configs.Environment.Host + ":" + configs.Environment.Port
+	if err := http.ListenAndServe(addr, mux); err != nil {
 		fmt.Println(err.Error())
 	}
 }
