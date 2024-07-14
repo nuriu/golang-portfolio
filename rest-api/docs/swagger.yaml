@@ -1,0 +1,52 @@
+definitions:
+  models.CreateTaskRequest:
+    properties:
+      description:
+        type: string
+      title:
+        type: string
+    required:
+    - description
+    - title
+    type: object
+  task.Task:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: REST API documentation.
+  title: REST API
+  version: "1.0"
+paths:
+  /api/v1/tasks:
+    post:
+      consumes:
+      - application/json
+      description: Create new task
+      parameters:
+      - description: CreateTaskRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/task.Task'
+      summary: Create Task
+swagger: "2.0"
