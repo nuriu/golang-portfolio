@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 	"rest-api/api/models"
-	"rest-api/internal/domain"
 	"rest-api/internal/domain/task"
 
 	"github.com/labstack/echo/v4"
@@ -37,10 +36,7 @@ func (handler *TaskHandler) createTaskHandler(c echo.Context) error {
 
 	task, err := handler.service.CreateTask(model.Title, model.Description)
 	if err != nil {
-		if domainErr, ok := err.(*domain.DomainError); ok {
-			return c.String(domainErr.Code, domainErr.Message)
-		}
-		return c.String(http.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	return c.JSON(http.StatusCreated, task)

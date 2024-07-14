@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"rest-api/api/handlers"
 	"rest-api/configs"
 	_ "rest-api/docs"
@@ -18,8 +19,16 @@ import (
 // @host localhost:8080
 func main() {
 	e := echo.New()
+
+	e.HTTPErrorHandler = handlers.HandleError
+
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
+	}))
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := e.Group("/api/v1")
