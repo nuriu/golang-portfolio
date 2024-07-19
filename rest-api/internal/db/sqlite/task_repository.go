@@ -1,3 +1,4 @@
 package sqlite
 
-type TaskSqliteRepository struct{}
+type TaskSqliteRepository struct {
+}

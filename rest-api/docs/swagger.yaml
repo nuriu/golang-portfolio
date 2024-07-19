@@ -30,6 +30,37 @@ info:
   version: "1.0"
 paths:
   /api/v1/tasks:
+    get:
+      consumes:
+      - application/json
+      description: Lists created tasks
+      parameters:
+      - description: Page Number
+        in: query
+        name: Page
+        required: true
+        type: integer
+      - description: Page Size
+        in: query
+        name: PageSize
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/task.Task'
+            type: array
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: List Tasks
     post:
       consumes:
       - application/json
@@ -44,9 +75,13 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/task.Task'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
       summary: Create Task
 swagger: "2.0"

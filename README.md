@@ -4,10 +4,10 @@ Project portfolio powered by Go.
 
 ## Projects
 
-- [ ] [RESTful API with Go and Gin](./rest-api/)
+- [ ] [RESTful API with Go and Echo](./rest-api/)
   - **Description:** Develop a RESTful API for a simple task management application.
   - **Skills Demonstrated:** Basic CRUD operations, routing, middleware, authentication, and testing.
-  - **Tech Stack:** Golang, Gin, JWT for authentication, GORM for ORM, PostgreSQL, Docker.
+  - **Tech Stack:** Golang, Echo, JWT for authentication, GORM for ORM, PostgreSQL, Docker.
 - [ ] Concurrent Web Scraper
   - **Description:** Implement a web scraper that fetches and processes data from multiple websites concurrently.
   - **Skills Demonstrated:** Efficient concurrency handling, error handling, data storage in a database.

@@ -3,9 +3,9 @@
 ## TODO
 
 - [x] Environment variable parsing (done using [joho/godotenv](https://github.com/joho/godotenv))
-- [ ] Routing for task service
+- [x] Routing for task service
 - [ ] Routing for user authentication
-- [ ] Implement in-memory task service
+- [x] Implement in-memory task service
   - Use DDD
   - Use TDD, search mocking in go
   - Search validator patterns / practices.
