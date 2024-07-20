@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/api/v1/tasks": {
             "get": {
-                "description": "Lists created tasks",
+                "description": "Returns list of the created tasks",
                 "consumes": [
                     "application/json"
                 ],
@@ -28,14 +28,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Page Number",
+                        "description": "Page to retrieve",
                         "name": "Page",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Page Size",
+                        "description": "Items per page",
                         "name": "PageSize",
                         "in": "query",
                         "required": true
@@ -63,7 +63,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create new task",
+                "description": "Creates new task",
                 "consumes": [
                     "application/json"
                 ],
@@ -73,7 +73,7 @@ const docTemplate = `{
                 "summary": "Create Task",
                 "parameters": [
                     {
-                        "description": "CreateTaskRequest",
+                        "description": "title and description for the new task",
                         "name": "Request",
                         "in": "body",
                         "required": true,

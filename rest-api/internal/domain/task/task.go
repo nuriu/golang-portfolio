@@ -40,9 +40,10 @@ func NewTask(title string, description string) (*Task, error) {
 
 	return &Task{
 		ID:          id,
-		CreatedAt:   time.Now().UTC(),
 		Title:       title,
 		Description: description,
+		CreatedAt:   time.Now().UTC(),
+		UpdatedAt:   time.Now().UTC(),
 	}, nil
 }
 

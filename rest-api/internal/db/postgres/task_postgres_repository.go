@@ -17,7 +17,7 @@ func (repository *TaskPostgresRepository) Create(task *task.Task) error {
 	return nil
 }
 
-func (repository *TaskPostgresRepository) List(page int, pageSize int) (*[]task.Task, error) {
+func (repository *TaskPostgresRepository) List(page int, pageSize int) ([]*task.Task, error) {
 	return nil, nil
 }
 

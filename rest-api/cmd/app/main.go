@@ -6,11 +6,13 @@ import (
 	"rest-api/configs"
 	_ "rest-api/docs"
 	"rest-api/internal/app/services"
-	"rest-api/internal/db/postgres"
+	"rest-api/internal/db/sqlite"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
+	gormSqlite "gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 // @title REST API
@@ -33,7 +35,12 @@ func main() {
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := e.Group("/api/v1")
 
-	taskRepository := postgres.NewTaskRepository()
+	db, err := gorm.Open(gormSqlite.Open(configs.Environment.SqliteDB), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	taskRepository := sqlite.NewTaskRepository(db)
 	taskService := services.NewTaskService(taskRepository)
 	taskHandlers := handlers.NewTaskHandlers(taskService)
 	taskHandlers.RegisterRoutes(v1, "/tasks")

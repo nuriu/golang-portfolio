@@ -33,14 +33,14 @@ paths:
     get:
       consumes:
       - application/json
-      description: Lists created tasks
+      description: Returns list of the created tasks
       parameters:
-      - description: Page Number
+      - description: Page to retrieve
         in: query
         name: Page
         required: true
         type: integer
-      - description: Page Size
+      - description: Items per page
         in: query
         name: PageSize
         required: true
@@ -64,9 +64,9 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create new task
+      description: Creates new task
       parameters:
-      - description: CreateTaskRequest
+      - description: title and description for the new task
         in: body
         name: Request
         required: true

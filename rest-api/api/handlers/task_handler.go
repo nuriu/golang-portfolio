@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"rest-api/api/models"
 	"rest-api/internal/domain/task"
@@ -23,6 +22,7 @@ func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string
 	group.POST(routePrefix, handler.createTaskHandler)
 }
 
+// @Router /api/v1/tasks [get]
 // @Summary List Tasks
 // @Description Returns list of the created tasks
 // @Accept json
@@ -33,33 +33,35 @@ func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string
 // @Failure 400
 // @Failure 401
 // @Failure 500
-// @Router /api/v1/tasks [get]
 func (handler *TaskHandler) listTasksHandler(c echo.Context) error {
-	page, err := strconv.Atoi(c.QueryParam("page"))
+	page, err := strconv.Atoi(c.QueryParam("Page"))
 	if err != nil {
-		return c.NoContent(http.StatusBadRequest)
+		return c.String(http.StatusBadRequest, "Couldn't parse 'Page' query parameter.")
 	}
 
-	pageSize, err := strconv.Atoi(c.QueryParam("pageSize"))
+	pageSize, err := strconv.Atoi(c.QueryParam("PageSize"))
 	if err != nil {
-		return c.NoContent(http.StatusBadRequest)
+		return c.String(http.StatusBadRequest, "Couldn't parse 'PageSize' query parameter.")
 	}
 
-	res := fmt.Sprintf("%d - %d", page, pageSize)
+	tasks, err := handler.service.ListTasks(page, pageSize)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
 
-	return c.String(http.StatusOK, res)
+	return c.JSON(http.StatusOK, tasks)
 }
 
+// @Router /api/v1/tasks [post]
 // @Summary Create Task
 // @Description Creates new task
 // @Accept json
 // @Produce json
-// @Param Request body models.CreateTaskRequest true
+// @Param Request body models.CreateTaskRequest true "title and description for the new task"
 // @Success 204
-// @Failure 400 {string}
+// @Failure 400
 // @Failure 401
 // @Failure 500
-// @Router /api/v1/tasks [post]
 func (handler *TaskHandler) createTaskHandler(c echo.Context) error {
 	model := new(models.CreateTaskRequest)
 
