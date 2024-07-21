@@ -58,7 +58,7 @@ func (handler *TaskHandler) listTasksHandler(c echo.Context) error {
 // @Accept json
 // @Produce json
 // @Param Request body models.CreateTaskRequest true "title and description for the new task"
-// @Success 204
+// @Success 201 {object} task.Task
 // @Failure 400
 // @Failure 401
 // @Failure 500
@@ -69,10 +69,10 @@ func (handler *TaskHandler) createTaskHandler(c echo.Context) error {
 		return c.String(http.StatusBadRequest, "Bad Request")
 	}
 
-	err := handler.service.CreateTask(model.Title, model.Description)
+	task, err := handler.service.CreateTask(model.Title, model.Description)
 	if err != nil {
 		return err
 	}
 
-	return c.NoContent(http.StatusNoContent)
+	return c.JSON(http.StatusCreated, task)
 }

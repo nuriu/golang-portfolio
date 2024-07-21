@@ -15,17 +15,18 @@ func NewTaskService(taskRepository task.TaskRepository) task.TaskService {
 }
 
 // CreateTask implements task.TaskService.
-func (t *TaskService) CreateTask(title string, description string) error {
+func (t *TaskService) CreateTask(title string, description string) (*task.Task, error) {
 	task, err := task.NewTask(title, description)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if err := t.taskRepository.Create(task); err != nil {
-		return err
+	createdTask, err := t.taskRepository.Create(task)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil
+	return createdTask, nil
 }
 
 // ListTasks implements task.TaskService.

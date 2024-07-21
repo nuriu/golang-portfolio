@@ -3,7 +3,7 @@ package task
 import "github.com/google/uuid"
 
 type TaskService interface {
-	CreateTask(title string, description string) error
+	CreateTask(title string, description string) (*Task, error)
 	ListTasks(page int, pageSize int) (interface{}, error)
 	GetTask(taskID uuid.UUID) (*Task, error)
 	UpdateTask(taskID uuid.UUID, title string, description string) error

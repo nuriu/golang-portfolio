@@ -17,14 +17,19 @@ func NewTaskRepository(db *gorm.DB) *TaskSqliteRepository {
 	return &TaskSqliteRepository{db: db}
 }
 
-func (repository *TaskSqliteRepository) Create(task *task.Task) error {
+func (repository *TaskSqliteRepository) Create(task *task.Task) (*task.Task, error) {
 	dbTask := models.MapToDBTask(task)
 
 	if err := repository.db.Create(dbTask).Error; err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	task, err := repository.Get(dbTask.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return task, nil
 }
 
 func (repository *TaskSqliteRepository) List(page int, pageSize int) (interface{}, error) {
@@ -32,7 +37,7 @@ func (repository *TaskSqliteRepository) List(page int, pageSize int) (interface{
 	pagination := models.PaginatedModel{
 		PageSize:    pageSize,
 		CurrentPage: page,
-		Order:       "CreatedAt desc",
+		Order:       "created_at desc",
 	}
 
 	repository.db.Scopes(models.Paginate(dbTasks, &pagination, repository.db)).Find(&dbTasks)
