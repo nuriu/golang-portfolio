@@ -1,0 +1,18 @@
+### List tasks
+GET http://localhost:8080/api/v1/tasks?Page=1&PageSize=2
+Content-Type: application/json
+
+### Create Task
+POST http://localhost:8080/api/v1/tasks
+Content-Type: application/json
+
+{
+  "title": "task add test - title",
+  "description": "task add test - description"
+}
+
+### Get Task
+GET http://localhost:8080/api/v1/tasks/0190d416-27f1-744d-828f-90eb02ccec30
+Content-Type: application/json
+
+###

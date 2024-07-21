@@ -6,6 +6,7 @@ import (
 	"rest-api/internal/domain/task"
 	"strconv"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
@@ -20,6 +21,7 @@ func NewTaskHandlers(service task.TaskService) *TaskHandler {
 func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string) {
 	group.GET(routePrefix, handler.listTasksHandler)
 	group.POST(routePrefix, handler.createTaskHandler)
+	group.GET(routePrefix+"/:id", handler.getTaskHandler)
 }
 
 // @Router /api/v1/tasks [get]
@@ -75,4 +77,28 @@ func (handler *TaskHandler) createTaskHandler(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, task)
+}
+
+// @Router /api/v1/tasks/{id} [get]
+// @Summary Get Task
+// @Description Returns the task with given id
+// @Accept json
+// @Produce json
+// @Param id path uuid.UUID true "Task ID"
+// @Success 200 {object} task.Task
+// @Failure 400
+// @Failure 401
+// @Failure 500
+func (handler *TaskHandler) getTaskHandler(c echo.Context) error {
+	id, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	task, err := handler.service.GetTask(id)
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, task)
 }
