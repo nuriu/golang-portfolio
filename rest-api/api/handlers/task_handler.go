@@ -22,6 +22,7 @@ func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string
 	group.GET(routePrefix, handler.listTasksHandler)
 	group.POST(routePrefix, handler.createTaskHandler)
 	group.GET(routePrefix+"/:id", handler.getTaskHandler)
+	group.DELETE(routePrefix+"/:id", handler.deleteTaskHandler)
 }
 
 // @Router /api/v1/tasks [get]
@@ -97,8 +98,32 @@ func (handler *TaskHandler) getTaskHandler(c echo.Context) error {
 
 	task, err := handler.service.GetTask(id)
 	if err != nil {
-		return c.String(http.StatusBadRequest, err.Error())
+		return c.String(http.StatusNotFound, err.Error())
 	}
 
 	return c.JSON(http.StatusOK, task)
+}
+
+// @Router /api/v1/tasks/{id} [delete]
+// @Summary Delete Task
+// @Description Deletes the task with given id
+// @Accept json
+// @Produce json
+// @Param id path uuid.UUID true "Task ID"
+// @Success 204
+// @Failure 400
+// @Failure 401
+// @Failure 500
+func (handler *TaskHandler) deleteTaskHandler(c echo.Context) error {
+	id, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	err = handler.service.DeleteTask(id)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.NoContent(http.StatusNoContent)
 }

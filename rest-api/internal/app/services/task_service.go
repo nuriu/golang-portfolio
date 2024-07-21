@@ -51,7 +51,8 @@ func (t *TaskService) GetTask(taskID uuid.UUID) (*task.Task, error) {
 
 // DeleteTask implements task.TaskService.
 func (t *TaskService) DeleteTask(taskID uuid.UUID) error {
-	if err := t.taskRepository.Delete(taskID); err != nil {
+	err := t.taskRepository.Delete(taskID)
+	if err != nil {
 		return err
 	}
 

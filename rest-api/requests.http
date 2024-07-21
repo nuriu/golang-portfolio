@@ -1,5 +1,5 @@
 ### List tasks
-GET http://localhost:8080/api/v1/tasks?Page=1&PageSize=2
+GET http://localhost:8080/api/v1/tasks?Page=1&PageSize=10
 Content-Type: application/json
 
 ### Create Task
@@ -12,7 +12,9 @@ Content-Type: application/json
 }
 
 ### Get Task
-GET http://localhost:8080/api/v1/tasks/0190d416-27f1-744d-828f-90eb02ccec30
+GET http://localhost:8080/api/v1/tasks/0190d157-933c-78ed-a33d-76f5e4f5b97a
 Content-Type: application/json
 
-###
+### Delete Task
+DELETE  http://localhost:8080/api/v1/tasks/0190d157-933c-78ed-a33d-76f5e4f5b97a
+Content-Type: application/json
