@@ -29,8 +29,8 @@ func (t *TaskService) CreateTask(title string, description string) error {
 }
 
 // ListTasks implements task.TaskService.
-func (t *TaskService) ListTasks(page int, pageSize int) ([]*task.Task, error) {
-	tasks, err := t.taskRepository.List(1, 10)
+func (t *TaskService) ListTasks(page int, pageSize int) (interface{}, error) {
+	tasks, err := t.taskRepository.List(page, pageSize)
 	if err != nil {
 		return nil, err
 	}

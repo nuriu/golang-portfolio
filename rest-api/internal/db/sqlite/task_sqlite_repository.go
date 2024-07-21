@@ -27,20 +27,18 @@ func (repository *TaskSqliteRepository) Create(task *task.Task) error {
 	return nil
 }
 
-// TODO: paginate
-func (repository *TaskSqliteRepository) List(page int, pageSize int) ([]*task.Task, error) {
+func (repository *TaskSqliteRepository) List(page int, pageSize int) (interface{}, error) {
 	var dbTasks []models.Task
-
-	if err := repository.db.Find(&dbTasks).Error; err != nil {
-		return nil, err
+	pagination := models.PaginatedModel{
+		PageSize:    pageSize,
+		CurrentPage: page,
+		Order:       "CreatedAt desc",
 	}
 
-	tasks := make([]*task.Task, len(dbTasks))
-	for i, dbTask := range dbTasks {
-		tasks[i] = models.MapFromDBTask(&dbTask)
-	}
+	repository.db.Scopes(models.Paginate(dbTasks, &pagination, repository.db)).Find(&dbTasks)
+	pagination.Data = dbTasks
 
-	return tasks, nil
+	return pagination, nil
 }
 
 func (repository *TaskSqliteRepository) Get(id uuid.UUID) (*task.Task, error) {
