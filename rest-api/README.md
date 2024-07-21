@@ -13,5 +13,5 @@
 - [ ] Integrate PostgreSQL as a database
   - [ ] Implement migration mechanism
   - [ ] Search for best practices & patterns
-- [ ] Dockerize project
+- [x] Dockerize project
 - [ ] Document how to run/test project @ README.md

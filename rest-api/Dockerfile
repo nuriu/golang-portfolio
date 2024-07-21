@@ -1,18 +1,16 @@
-FROM golang:1.22.0 AS build
+FROM golang:1.22.5 AS build-stage
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY . ./
 RUN go mod download
 
-COPY . .
+RUN CGO_ENABLED=1 GOOS=linux go build -o ./rest ./cmd/app/main.go
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /bin ./cmd/app/main.go
+# FROM alpine:latest AS build-release-stage
+# WORKDIR /
 
-FROM scratch AS deploy
-WORKDIR /
-
-COPY --from=build /bin /bin
+# COPY --from=build-stage /app/rest /app/rest
 
 EXPOSE 8080
 
-ENTRYPOINT ["/bin"]
+CMD ["/app/rest"]

@@ -8,6 +8,7 @@ import (
 	"rest-api/internal/app/services"
 	"rest-api/internal/db/sqlite"
 
+	echojwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -34,6 +35,10 @@ func main() {
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := e.Group("/api/v1")
+	v1.Use((echojwt.WithConfig(echojwt.Config{
+		SigningKey:   []byte(configs.Environment.JWTSecret),
+		ErrorHandler: handlers.HandleJWTError,
+	})))
 
 	db, err := gorm.Open(gormSqlite.Open(configs.Environment.SqliteDB), &gorm.Config{})
 	if err != nil {

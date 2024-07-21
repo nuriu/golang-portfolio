@@ -16,12 +16,12 @@ func NewTaskService(taskRepository task.TaskRepository) task.TaskService {
 
 // CreateTask implements task.TaskService.
 func (t *TaskService) CreateTask(title string, description string) (*task.Task, error) {
-	task, err := task.NewTask(title, description)
+	generatedTask, err := task.NewTask(title, description)
 	if err != nil {
 		return nil, err
 	}
 
-	createdTask, err := t.taskRepository.Create(task)
+	createdTask, err := t.taskRepository.Create(generatedTask)
 	if err != nil {
 		return nil, err
 	}
@@ -41,12 +41,12 @@ func (t *TaskService) ListTasks(page int, pageSize int) (interface{}, error) {
 
 // GetTask implements task.TaskService.
 func (t *TaskService) GetTask(taskID uuid.UUID) (*task.Task, error) {
-	task, err := t.taskRepository.Get(taskID)
+	taskDetail, err := t.taskRepository.Get(taskID)
 	if err != nil {
 		return nil, err
 	}
 
-	return task, nil
+	return taskDetail, nil
 }
 
 // DeleteTask implements task.TaskService.

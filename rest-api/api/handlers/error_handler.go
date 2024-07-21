@@ -17,3 +17,9 @@ func HandleError(err error, c echo.Context) {
 
 	c.String(http.StatusInternalServerError, err.Error())
 }
+
+func HandleJWTError(c echo.Context, err error) error {
+	c.Logger().Error(err)
+
+	return err
+}

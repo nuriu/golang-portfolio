@@ -8,9 +8,10 @@ import (
 )
 
 type Config struct {
-	Host     string
-	Port     string
-	SqliteDB string
+	Host      string
+	Port      string
+	JWTSecret string
+	SqliteDB  string
 }
 
 var Environment = loadConfig()
@@ -22,9 +23,10 @@ func loadConfig() Config {
 	}
 
 	return Config{
-		Host:     getEnvironmentVariableStr("HOST", "localhost"),
-		Port:     getEnvironmentVariableStr("PORT", "8080"),
-		SqliteDB: getEnvironmentVariableStr("SQLITE_DB", "bin/test.db"),
+		Host:      getEnvironmentVariableStr("HOST", "localhost"),
+		Port:      getEnvironmentVariableStr("PORT", "8080"),
+		JWTSecret: getEnvironmentVariableStr("PORT", "SECRET"),
+		SqliteDB:  getEnvironmentVariableStr("SQLITE_DB", "bin/test.db"),
 	}
 }
 
