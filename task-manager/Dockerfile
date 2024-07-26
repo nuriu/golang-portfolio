@@ -4,13 +4,13 @@ WORKDIR /app
 COPY . ./
 RUN go mod download
 
-RUN CGO_ENABLED=1 GOOS=linux go build -o ./rest ./cmd/app/main.go
+RUN CGO_ENABLED=1 GOOS=linux go build -o ./tm ./cmd/api/main.go
 
 # FROM alpine:latest AS build-release-stage
 # WORKDIR /
 
-# COPY --from=build-stage /app/rest /app/rest
+# COPY --from=build-stage /app/tm /app/tm
 
 EXPOSE 8080
 
-CMD ["/app/rest"]
+CMD ["/app/tm"]

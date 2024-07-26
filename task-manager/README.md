@@ -1,4 +1,6 @@
-# REST API
+# Task Manager
+
+> RESTful API with Go and Echo
 
 ## TODO
 

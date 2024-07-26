@@ -177,6 +177,9 @@ const docTemplate = `{
                 "createdAt": {
                     "type": "string"
                 },
+                "deletedAt": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },

@@ -1,8 +1,8 @@
 package sqlite
 
 import (
-	"rest-api/internal/db/models"
-	"rest-api/internal/domain/task"
+	"task-manager/internal/db/models"
+	"task-manager/internal/domain/task"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -13,12 +13,12 @@ type TaskSqliteRepository struct {
 }
 
 func NewTaskRepository(db *gorm.DB) *TaskSqliteRepository {
-	db.AutoMigrate(&models.Task{})
+	db.AutoMigrate(&models.TaskEntity{})
 	return &TaskSqliteRepository{db: db}
 }
 
 func (repository *TaskSqliteRepository) Create(task *task.Task) (*task.Task, error) {
-	dbTask := models.MapToDBTask(task)
+	dbTask := models.FromDomain(task)
 
 	if err := repository.db.Create(dbTask).Error; err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (repository *TaskSqliteRepository) Create(task *task.Task) (*task.Task, err
 }
 
 func (repository *TaskSqliteRepository) List(page int, pageSize int) (interface{}, error) {
-	var dbTasks []models.Task
+	var dbTasks []models.TaskEntity
 	pagination := models.PaginatedModel{
 		PageSize:    pageSize,
 		CurrentPage: page,
@@ -47,15 +47,15 @@ func (repository *TaskSqliteRepository) List(page int, pageSize int) (interface{
 }
 
 func (repository *TaskSqliteRepository) Get(id uuid.UUID) (*task.Task, error) {
-	var dbTask models.Task
+	var dbTask models.TaskEntity
 	if err := repository.db.First(&dbTask, id).Error; err != nil {
 		return nil, err
 	}
 
-	task := models.MapFromDBTask(&dbTask)
+	task := dbTask.ToDomain()
 	return task, nil
 }
 
 func (repository *TaskSqliteRepository) Delete(id uuid.UUID) error {
-	return repository.db.Delete(&models.Task{}, id).Error
+	return repository.db.Delete(&models.TaskEntity{}, id).Error
 }

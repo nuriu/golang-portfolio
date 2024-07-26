@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"rest-api/internal/domain/task"
+	"task-manager/internal/domain/task"
 
 	"github.com/google/uuid"
 )

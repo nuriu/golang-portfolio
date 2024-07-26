@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"net/http"
-	"rest-api/api/models"
-	"rest-api/internal/domain/task"
 	"strconv"
+	"task-manager/api/models"
+	"task-manager/internal/domain/task"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"

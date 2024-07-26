@@ -4,7 +4,7 @@ Project portfolio powered by Go.
 
 ## Projects
 
-- [ ] [RESTful API with Go and Echo](./rest-api/)
+- [ ] [Task Manager - RESTful API with Go and Echo](./task-manager/)
   - **Description:** Develop a RESTful API for a simple task management application.
   - **Skills Demonstrated:** Basic CRUD operations, routing, middleware, authentication, and testing.
   - **Tech Stack:** Golang, Echo, JWT for authentication, GORM for ORM, PostgreSQL, Docker.

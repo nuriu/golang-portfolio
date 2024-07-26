@@ -2,11 +2,11 @@ package main
 
 import (
 	"net/http"
-	"rest-api/api/handlers"
-	"rest-api/configs"
-	_ "rest-api/docs"
-	"rest-api/internal/app/services"
-	"rest-api/internal/db/sqlite"
+	"task-manager/api/handlers"
+	"task-manager/configs"
+	_ "task-manager/docs"
+	"task-manager/internal/app/services"
+	"task-manager/internal/db/sqlite"
 
 	echojwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"

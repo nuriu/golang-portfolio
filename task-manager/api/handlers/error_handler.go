@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"net/http"
-	"rest-api/internal/domain"
+	"task-manager/internal/domain"
 
 	"github.com/labstack/echo/v4"
 )

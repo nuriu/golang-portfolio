@@ -1,8 +1,8 @@
 package task
 
 import (
-	"rest-api/internal/domain"
 	"strings"
+	"task-manager/internal/domain"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,6 +17,7 @@ var (
 type Task struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	DeletedAt   *time.Time
 	Title       string
 	Description string
 	ID          uuid.UUID
@@ -44,6 +45,7 @@ func NewTask(title string, description string) (*Task, error) {
 		Description: description,
 		CreatedAt:   time.Now().UTC(),
 		UpdatedAt:   time.Now().UTC(),
+		DeletedAt:   nil,
 	}, nil
 }
 
