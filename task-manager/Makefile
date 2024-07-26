@@ -8,4 +8,4 @@ run: build
 	@./bin/tm
 
 generate:
-	@swag init -d cmd/api,api/handlers,api/models -g main.go --parseDependency true --parseInternal true
+	@swag init -d cmd/api,internal/http/handlers,internal/http/models -g main.go --parseDependency true --parseInternal true

@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 	"strconv"
-	"task-manager/api/models"
 	"task-manager/internal/domain/task"
+	"task-manager/internal/http/models"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
