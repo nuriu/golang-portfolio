@@ -11,7 +11,7 @@ type BaseEntity struct {
 	ID        uuid.UUID `gorm:"type:uuid;primary_key;"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt *time.Time `sql:"index"`
+	DeletedAt gorm.DeletedAt `sql:"index"`
 }
 
 func (baseEntity *BaseEntity) BeforeCreate(db *gorm.DB) (err error) {

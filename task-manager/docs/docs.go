@@ -174,6 +174,9 @@ const docTemplate = `{
         "task.Task": {
             "type": "object",
             "properties": {
+                "completionDate": {
+                    "type": "string"
+                },
                 "createdAt": {
                     "type": "string"
                 },
@@ -185,6 +188,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "string"
+                },
+                "isCompleted": {
+                    "type": "boolean"
                 },
                 "title": {
                     "type": "string"

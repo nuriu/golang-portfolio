@@ -1,5 +1,6 @@
 services:
-  api:
+  task-manager-api:
+    container_name: task-manager-api
     build:
       context: .
       dockerfile: Dockerfile

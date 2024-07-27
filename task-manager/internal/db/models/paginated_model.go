@@ -11,7 +11,7 @@ type PaginatedModel struct {
 	CurrentPage    int
 	TotalRowCount  int64
 	TotalPageCount int
-	Order          string
+	Order          string `json:"-"`
 	Data           interface{}
 }
 

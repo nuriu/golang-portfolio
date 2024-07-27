@@ -2,6 +2,8 @@ package models
 
 import (
 	"task-manager/internal/domain/task"
+
+	"gorm.io/gorm"
 )
 
 type TaskEntity struct {
@@ -15,12 +17,18 @@ func (TaskEntity) TableName() string {
 }
 
 func FromDomain(t *task.Task) *TaskEntity {
+	deleteInfo := gorm.DeletedAt{Valid: false}
+	if t.DeletedAt != nil {
+		deleteInfo.Time = *t.DeletedAt
+		deleteInfo.Valid = true
+	}
+
 	return &TaskEntity{
 		BaseEntity: BaseEntity{
 			ID:        t.ID,
 			CreatedAt: t.CreatedAt,
 			UpdatedAt: t.UpdatedAt,
-			DeletedAt: t.DeletedAt,
+			DeletedAt: deleteInfo,
 		},
 		Title:       t.Title,
 		Description: t.Description,
@@ -34,6 +42,6 @@ func (te *TaskEntity) ToDomain() *task.Task {
 		Description: te.Description,
 		CreatedAt:   te.CreatedAt,
 		UpdatedAt:   te.UpdatedAt,
-		DeletedAt:   te.DeletedAt,
+		DeletedAt:   &te.DeletedAt.Time,
 	}
 }

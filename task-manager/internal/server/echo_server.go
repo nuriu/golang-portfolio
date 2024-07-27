@@ -2,12 +2,10 @@ package server
 
 import (
 	"net/http"
-	"task-manager/configs"
 	"task-manager/internal/app/services"
 	"task-manager/internal/db/sqlite"
 	"task-manager/internal/http/handlers"
 
-	echojwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -29,10 +27,10 @@ func Run(address string, db *gorm.DB) {
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	v1 := e.Group("/api/v1")
-	v1.Use((echojwt.WithConfig(echojwt.Config{
-		SigningKey:   []byte(configs.Environment.JWTSecret),
-		ErrorHandler: handlers.HandleJWTError,
-	})))
+	// v1.Use((echojwt.WithConfig(echojwt.Config{
+	// 	SigningKey:   []byte(configs.Environment.JWTSecret),
+	// 	ErrorHandler: handlers.HandleJWTError,
+	// })))
 
 	taskRepository := sqlite.NewTaskRepository(db)
 	taskService := services.NewTaskService(taskRepository)

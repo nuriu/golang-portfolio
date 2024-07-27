@@ -167,6 +167,9 @@
         "task.Task": {
             "type": "object",
             "properties": {
+                "completionDate": {
+                    "type": "string"
+                },
                 "createdAt": {
                     "type": "string"
                 },
@@ -178,6 +181,9 @@
                 },
                 "id": {
                     "type": "string"
+                },
+                "isCompleted": {
+                    "type": "boolean"
                 },
                 "title": {
                     "type": "string"
