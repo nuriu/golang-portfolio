@@ -16,7 +16,7 @@ func (TaskEntity) TableName() string {
 	return "tasks"
 }
 
-func FromDomain(t *task.Task) *TaskEntity {
+func TaskFromDomainEntity(t *task.Task) *TaskEntity {
 	deleteInfo := gorm.DeletedAt{Valid: false}
 	if t.DeletedAt != nil {
 		deleteInfo.Time = *t.DeletedAt
@@ -35,7 +35,7 @@ func FromDomain(t *task.Task) *TaskEntity {
 	}
 }
 
-func (te *TaskEntity) ToDomain() *task.Task {
+func (te *TaskEntity) ToDomainEntity() *task.Task {
 	return &task.Task{
 		ID:          te.ID,
 		Title:       te.Title,

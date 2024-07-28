@@ -9,7 +9,6 @@ import (
 )
 
 var (
-	ErrorTaskIDGeneration     = domain.NewDomainError(400, "task ID generation failed")
 	ErrorTaskTitleEmpty       = domain.NewDomainError(400, "title is empty")
 	ErrorTaskDescriptionEmpty = domain.NewDomainError(400, "description is empty")
 )

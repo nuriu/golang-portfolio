@@ -18,7 +18,7 @@ func NewTaskRepository(db *gorm.DB) *TaskSqliteRepository {
 }
 
 func (repository *TaskSqliteRepository) Create(task *task.Task) (*task.Task, error) {
-	dbTask := models.FromDomain(task)
+	dbTask := models.TaskFromDomainEntity(task)
 
 	if err := repository.db.Create(dbTask).Error; err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func (repository *TaskSqliteRepository) Get(id uuid.UUID) (*task.Task, error) {
 		return nil, err
 	}
 
-	task := dbTask.ToDomain()
+	task := dbTask.ToDomainEntity()
 	return task, nil
 }
 
