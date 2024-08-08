@@ -33,7 +33,7 @@ func (repository *UserSqliteRepository) Create(user *user.User) (*user.User, err
 
 func (repository *UserSqliteRepository) Get(email string) (*user.User, error) {
 	var dbUser models.UserEntity
-	if err := repository.db.First(&dbUser, email).Error; err != nill {
+	if err := repository.db.Where(&user.User{Email: email}).First(&dbUser).Error; err != nil {
 		return nil, err
 	}
 

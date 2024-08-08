@@ -14,8 +14,8 @@ type TaskHandler struct {
 	service task.TaskService
 }
 
-func NewTaskHandlers(service task.TaskService) *TaskHandler {
-	return &TaskHandler{service: service}
+func NewTaskHandler(service task.TaskService) *TaskHandler {
+	return &TaskHandler{service}
 }
 
 func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string) {
