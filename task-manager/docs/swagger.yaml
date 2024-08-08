@@ -127,4 +127,16 @@ paths:
         "500":
           description: Internal Server Error
       summary: Get Task
+  /api/v1/users:
+    get:
+      responses: {}
+      summary: Login user
+  /api/v1/users/login:
+    post:
+      responses: {}
+      summary: Login user
+  /api/v1/users/register:
+    post:
+      responses: {}
+      summary: Registers user
 swagger: "2.0"

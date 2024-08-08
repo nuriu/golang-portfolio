@@ -1,5 +1,6 @@
 ### List tasks
 GET http://localhost:8080/api/v1/tasks?Page=1&PageSize=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzIzNDA2MzU1fQ.Lker_AtBiZzdy7xZsN-QQ90aHEhmEUZdYW1WK6Ms9ZA
 Content-Type: application/json
 
 ### Create Task
@@ -18,3 +19,25 @@ Content-Type: application/json
 ### Delete Task
 DELETE  http://localhost:8080/api/v1/tasks/0190f5db-dfc2-7ed1-b46b-f9258d1c7816
 Content-Type: application/json
+
+
+### Register User
+POST http://localhost:8080/api/v1/users/register
+Content-Type: application/x-www-form-urlencoded
+
+email=admin@admin.com
+&password=admin
+
+### Get User
+GET http://localhost:8080/api/v1/users
+Content-Type: application/x-www-form-urlencoded
+
+email=admin@admin.com
+
+### Login User
+POST http://localhost:8080/api/v1/users/login
+Content-Type: application/x-www-form-urlencoded
+
+email=admin@admin.com
+&password=admin
+

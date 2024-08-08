@@ -4,9 +4,6 @@
 
 ## TODO
 
-- [ ] Routing for user authentication
-- [ ] User authentication using JWT 
-- [ ] Integrate PostgreSQL as a database
-  - [ ] Implement migration mechanism
-  - [ ] Search for best practices & patterns
-- [ ] Document how to run/test project @ README.md
+- Integrate PostgreSQL as a database
+  - Implement migration mechanism
+- Document how to run/test project @ README.md

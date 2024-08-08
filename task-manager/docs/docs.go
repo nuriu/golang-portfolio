@@ -153,6 +153,24 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/users": {
+            "get": {
+                "summary": "Login user",
+                "responses": {}
+            }
+        },
+        "/api/v1/users/login": {
+            "post": {
+                "summary": "Login user",
+                "responses": {}
+            }
+        },
+        "/api/v1/users/register": {
+            "post": {
+                "summary": "Registers user",
+                "responses": {}
+            }
         }
     },
     "definitions": {
