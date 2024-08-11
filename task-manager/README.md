@@ -4,6 +4,5 @@
 
 ## TODO
 
-- Integrate PostgreSQL as a database
-  - Implement migration mechanism
+- Write tests.
 - Document how to run/test project @ README.md
