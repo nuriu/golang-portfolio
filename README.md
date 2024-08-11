@@ -11,7 +11,7 @@ Project portfolio powered by Go.
 - [ ] Concurrent Web Scraper
   - **Description:** Implement a web scraper that fetches and processes data from multiple websites concurrently.
   - **Skills Demonstrated:** Efficient concurrency handling, error handling, data storage in a database.
-  - **Tech Stack:** Golang, Goroutines, Channels, SQLite/ElasticSearch.
+  - **Tech Stack:** Golang, Goroutines, Channels, ElasticSearch.
 - [ ] GraphQL API
   - **Description:** Create a GraphQL API for a blogging platform.
   - **Skills Demonstrated:** Queries and mutations for users, posts, comments, and likes.

@@ -1,4 +1,4 @@
-package sqlite
+package repositories
 
 import (
 	"task-manager/internal/db/models"

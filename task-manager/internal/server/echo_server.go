@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"task-manager/configs"
 	"task-manager/internal/app/services"
-	"task-manager/internal/db/sqlite"
+	"task-manager/internal/db/repositories"
 	"task-manager/internal/http/handlers"
 
 	echojwt "github.com/labstack/echo-jwt/v4"
@@ -31,7 +31,7 @@ func Run(address string, db *gorm.DB) {
 	v1 := e.Group("/api/v1")
 
 	v1User := v1.Group("/users")
-	userRepository := sqlite.NewUserRepository(db)
+	userRepository := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepository)
 	userHandlers := handlers.NewUserHandler(userService)
 	userHandlers.RegisterRoutes(v1User, "")
@@ -41,7 +41,7 @@ func Run(address string, db *gorm.DB) {
 		SigningKey:   []byte(configs.Environment.JWTSecret),
 		ErrorHandler: handlers.HandleJWTError,
 	})))
-	taskRepository := sqlite.NewTaskRepository(db)
+	taskRepository := repositories.NewTaskRepository(db)
 	taskService := services.NewTaskService(taskRepository)
 	taskHandlers := handlers.NewTaskHandler(taskService)
 	taskHandlers.RegisterRoutes(v1Task, "")
