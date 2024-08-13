@@ -9,3 +9,9 @@ run: build
 
 generate:
 	@swag init -d cmd/api,internal/http/handlers,internal/http/models -g main.go --parseDependency true --parseInternal true
+
+cu: generate
+	@docker compose up
+
+cd:
+	@docker compose down

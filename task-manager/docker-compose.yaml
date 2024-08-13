@@ -1,5 +1,5 @@
 services:
-  task-manager-api:
+  api:
     container_name: task-manager-api
     build:
       context: .
@@ -8,3 +8,23 @@ services:
     ports:
       - "8080:8080"
     network_mode: host
+    depends_on:
+      - postgres
+
+
+  postgres:
+    container_name: task-manager-postgres
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=taskmanager
+    network_mode: host
+
+
+volumes:
+  postgres_data:
