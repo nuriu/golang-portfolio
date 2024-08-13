@@ -97,6 +97,13 @@ paths:
       consumes:
       - application/json
       description: Deletes the task with given id
+      parameters:
+      - description: Task ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -113,6 +120,13 @@ paths:
       consumes:
       - application/json
       description: Returns the task with given id
+      parameters:
+      - description: Task ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:

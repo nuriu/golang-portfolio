@@ -85,7 +85,7 @@ func (handler *TaskHandler) createTaskHandler(c echo.Context) error {
 // @Description Returns the task with given id
 // @Accept json
 // @Produce json
-// @Param id path uuid.UUID true "Task ID"
+// @Param id path string true "Task ID" Format(uuid)
 // @Success 200 {object} task.Task
 // @Failure 400
 // @Failure 401
@@ -109,7 +109,7 @@ func (handler *TaskHandler) getTaskHandler(c echo.Context) error {
 // @Description Deletes the task with given id
 // @Accept json
 // @Produce json
-// @Param id path uuid.UUID true "Task ID"
+// @Param id path string true "Task ID" Format(uuid)
 // @Success 204
 // @Failure 400
 // @Failure 401
