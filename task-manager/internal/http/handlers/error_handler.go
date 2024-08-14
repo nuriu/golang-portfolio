@@ -21,5 +21,7 @@ func HandleError(err error, c echo.Context) {
 func HandleJWTError(c echo.Context, err error) error {
 	c.Logger().Error(err)
 
-	return err
+	return c.JSON(http.StatusUnauthorized, map[string]string{
+		"message": "Unauthorized, missing or invalid token",
+	})
 }
