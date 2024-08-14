@@ -13,5 +13,8 @@ generate:
 cu: generate
 	@docker compose up
 
+cud: generate
+	@docker compose up -d
+
 cd:
 	@docker compose down

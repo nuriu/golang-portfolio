@@ -27,7 +27,8 @@ func Run(address string, db *gorm.DB) {
 		AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
 	}))
 
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.GET("/*", echoSwagger.WrapHandler)
+
 	v1 := e.Group("/api/v1")
 
 	v1User := v1.Group("/users")
