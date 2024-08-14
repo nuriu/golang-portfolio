@@ -4,16 +4,12 @@ import (
 	"net/http"
 	"task-manager/configs"
 	"task-manager/internal/domain/user"
+	"task-manager/internal/http/models"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
-
-type jwtClaims struct {
-	Email string `json:"email"`
-	jwt.RegisteredClaims
-}
 
 type UserHandler struct {
 	service user.UserService
@@ -57,9 +53,9 @@ func (handler *UserHandler) loginHandler(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, nil)
 	}
 
-	claims := &jwtClaims{
-		registeredUser.Email,
-		jwt.RegisteredClaims{
+	claims := &models.JWTClaims{
+		Email: registeredUser.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
 			ID:        registeredUser.ID.String(),
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
 		},
