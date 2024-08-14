@@ -10,9 +10,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type jwtCustomClaims struct {
-	Name  string `json:"name"`
-	Admin bool   `json:"admin"`
+type jwtClaims struct {
+	Email string `json:"email"`
 	jwt.RegisteredClaims
 }
 
@@ -36,27 +35,32 @@ func (handler *UserHandler) loginHandler(c echo.Context) error {
 	email := c.FormValue("email")
 	password := c.FormValue("password")
 
-	if email != "admin@admin.com" || password != "admin" {
+	user, err := handler.service.GetUser(email)
+	if err != nil {
+		return c.String(http.StatusNotFound, err.Error())
+	}
+
+	if email != user.Email || password != user.Password {
 		return echo.ErrUnauthorized
 	}
 
-	claims := &jwtCustomClaims{
-		"Jon Snow",
-		true,
+	claims := &jwtClaims{
+		user.Email,
 		jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 72)),
+			ID:        user.ID.String(),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	t, err := token.SignedString([]byte(configs.Environment.JWTSecret))
+	signedToken, err := token.SignedString([]byte(configs.Environment.JWTSecret))
 	if err != nil {
 		return err
 	}
 
 	return c.JSON(http.StatusOK, echo.Map{
-		"access_token": t,
+		"access_token": signedToken,
 	})
 }
 
