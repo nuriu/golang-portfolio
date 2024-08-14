@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"task-manager/configs"
 	"task-manager/internal/domain/user"
+	"task-manager/internal/http/middlewares"
 	"task-manager/internal/http/models"
 	"time"
 
@@ -22,7 +23,7 @@ func NewUserHandler(service user.UserService) *UserHandler {
 func (handler *UserHandler) RegisterRoutes(group *echo.Group, routePrefix string) {
 	group.POST(routePrefix+"/login", handler.loginHandler)
 	group.POST(routePrefix+"/register", handler.registerHandler)
-	group.GET(routePrefix, handler.getUserHandler)
+	group.GET(routePrefix, handler.getUserHandler, middlewares.JWTMiddleware)
 }
 
 // @Router /api/v1/users/login [post]
@@ -100,15 +101,17 @@ func (handler *UserHandler) registerHandler(c echo.Context) error {
 // @Router /api/v1/users [get]
 // @Summary Get user info
 // @Description Returns authenticated user
+// @Security BearerAuth
 // @Produce json
 // @Success 200 {object} user.User
 // @Failure 500
 func (handler *UserHandler) getUserHandler(c echo.Context) error {
-	// TODO: return authenticated user
-	email := c.FormValue("email")
-	user, err := handler.service.GetUser(email)
+	token := c.Get("user").(*jwt.Token)
+	claims := token.Claims.(*models.JWTClaims)
+
+	user, err := handler.service.GetUser(claims.Email)
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	return c.JSON(http.StatusOK, user)

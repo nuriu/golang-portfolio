@@ -176,6 +176,8 @@ paths:
             $ref: '#/definitions/user.User'
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Get user info
   /api/v1/users/login:
     post:
