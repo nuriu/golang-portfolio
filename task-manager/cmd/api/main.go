@@ -14,6 +14,10 @@ import (
 // @version 1.0
 // @description REST API documentation.
 // @host localhost:8080
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	dsn, err := configs.Environment.GetPostgresDsn()
 	if err != nil {

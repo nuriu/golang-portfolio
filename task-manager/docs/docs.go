@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/api/v1/tasks": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns list of the created tasks",
                 "consumes": [
                     "application/json"
@@ -63,6 +68,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Creates new task",
                 "consumes": [
                     "application/json"
@@ -103,6 +113,11 @@ const docTemplate = `{
         },
         "/api/v1/tasks/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns the task with given id",
                 "consumes": [
                     "application/json"
@@ -140,6 +155,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Deletes the task with given id",
                 "consumes": [
                     "application/json"
@@ -176,20 +196,112 @@ const docTemplate = `{
         },
         "/api/v1/users": {
             "get": {
-                "summary": "Login user",
-                "responses": {}
+                "description": "Returns authenticated user",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get user info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.User"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         },
         "/api/v1/users/login": {
             "post": {
-                "summary": "Login user",
-                "responses": {}
+                "description": "Returns token for valid authentication",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Login with existing user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User email",
+                        "name": "email",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "password",
+                        "description": "User password",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "access_token",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         },
         "/api/v1/users/register": {
             "post": {
-                "summary": "Registers user",
-                "responses": {}
+                "description": "Registers new user",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Register new user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User email",
+                        "name": "email",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "password",
+                        "description": "User password",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/user.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         }
     },
@@ -237,6 +349,36 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "user.User": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

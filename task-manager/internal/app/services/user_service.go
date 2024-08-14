@@ -1,7 +1,6 @@
 package services
 
 import (
-	"errors"
 	"task-manager/internal/domain/user"
 )
 
@@ -17,7 +16,7 @@ func NewUserService(userRepository user.UserRepository) user.UserService {
 func (u *UserSevice) CreateUser(email string, password string) (*user.User, error) {
 	existingUser, _ := u.userRepository.Get(email)
 	if existingUser != nil {
-		return nil, errors.New("user already exists")
+		return nil, user.ErrorUserAlreadyExists
 	}
 
 	generatedUser, err := user.NewUser(email, password)
@@ -35,8 +34,16 @@ func (u *UserSevice) CreateUser(email string, password string) (*user.User, erro
 
 // GetUser implements user.UserService.
 func (u *UserSevice) GetUser(email string) (*user.User, error) {
+	if len(email) == 0 {
+		return nil, user.ErrorUserEmailEmpty
+	}
+
 	userDetail, err := u.userRepository.Get(email)
 	if err != nil {
+		if err.Error() == "record not found" {
+			return nil, user.ErrorUserNotFound
+		}
+
 		return nil, err
 	}
 

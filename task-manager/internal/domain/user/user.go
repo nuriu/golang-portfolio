@@ -11,6 +11,8 @@ import (
 var (
 	ErrorUserEmailEmpty    = domain.NewDomainError(400, "email is empty")
 	ErrorUserPasswordEmpty = domain.NewDomainError(400, "password is empty")
+	ErrorUserAlreadyExists = domain.NewDomainError(400, "user already exists")
+	ErrorUserNotFound      = domain.NewDomainError(404, "user not found")
 )
 
 type User struct {

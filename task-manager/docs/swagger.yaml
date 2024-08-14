@@ -28,6 +28,21 @@ definitions:
       updatedAt:
         type: string
     type: object
+  user.User:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -66,6 +81,8 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: List Tasks
     post:
       consumes:
@@ -91,6 +108,8 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Create Task
   /api/v1/tasks/{id}:
     delete:
@@ -115,6 +134,8 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Delete Task
     get:
       consumes:
@@ -140,17 +161,86 @@ paths:
           description: Unauthorized
         "500":
           description: Internal Server Error
+      security:
+      - BearerAuth: []
       summary: Get Task
   /api/v1/users:
     get:
-      responses: {}
-      summary: Login user
+      description: Returns authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.User'
+        "500":
+          description: Internal Server Error
+      summary: Get user info
   /api/v1/users/login:
     post:
-      responses: {}
-      summary: Login user
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Returns token for valid authentication
+      parameters:
+      - description: User email
+        in: formData
+        name: email
+        required: true
+        type: string
+      - description: User password
+        format: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: access_token
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Login with existing user
   /api/v1/users/register:
     post:
-      responses: {}
-      summary: Registers user
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Registers new user
+      parameters:
+      - description: User email
+        in: formData
+        name: email
+        required: true
+        type: string
+      - description: User password
+        format: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/user.User'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Register new user
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

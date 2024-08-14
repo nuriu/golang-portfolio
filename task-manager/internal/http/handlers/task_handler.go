@@ -28,6 +28,7 @@ func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string
 // @Router /api/v1/tasks [get]
 // @Summary List Tasks
 // @Description Returns list of the created tasks
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param Page query int true "Page to retrieve"
@@ -58,6 +59,7 @@ func (handler *TaskHandler) listTasksHandler(c echo.Context) error {
 // @Router /api/v1/tasks [post]
 // @Summary Create Task
 // @Description Creates new task
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param Request body models.CreateTaskRequest true "title and description for the new task"
@@ -83,6 +85,7 @@ func (handler *TaskHandler) createTaskHandler(c echo.Context) error {
 // @Router /api/v1/tasks/{id} [get]
 // @Summary Get Task
 // @Description Returns the task with given id
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param id path string true "Task ID" Format(uuid)
@@ -107,6 +110,7 @@ func (handler *TaskHandler) getTaskHandler(c echo.Context) error {
 // @Router /api/v1/tasks/{id} [delete]
 // @Summary Delete Task
 // @Description Deletes the task with given id
+// @Security BearerAuth
 // @Accept json
 // @Produce json
 // @Param id path string true "Task ID" Format(uuid)
