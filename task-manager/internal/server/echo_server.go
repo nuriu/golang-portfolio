@@ -2,12 +2,11 @@ package server
 
 import (
 	"net/http"
-	"task-manager/configs"
 	"task-manager/internal/app/services"
 	"task-manager/internal/db/repositories"
 	"task-manager/internal/http/handlers"
+	"task-manager/internal/http/middlewares"
 
-	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -38,10 +37,7 @@ func Run(address string, db *gorm.DB) {
 	userHandlers.RegisterRoutes(v1User, "")
 
 	v1Task := v1.Group("/tasks")
-	v1Task.Use((echojwt.WithConfig(echojwt.Config{
-		SigningKey:   []byte(configs.Environment.JWTSecret),
-		ErrorHandler: handlers.HandleJWTError,
-	})))
+	v1Task.Use(middlewares.JWTMiddleware)
 	taskRepository := repositories.NewTaskRepository(db)
 	taskService := services.NewTaskService(taskRepository)
 	taskHandlers := handlers.NewTaskHandler(taskService)

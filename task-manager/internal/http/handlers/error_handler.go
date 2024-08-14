@@ -17,11 +17,3 @@ func HandleError(err error, c echo.Context) {
 
 	c.String(http.StatusInternalServerError, err.Error())
 }
-
-func HandleJWTError(c echo.Context, err error) error {
-	c.Logger().Error(err)
-
-	return c.JSON(http.StatusUnauthorized, map[string]string{
-		"message": "Unauthorized, missing or invalid token",
-	})
-}
