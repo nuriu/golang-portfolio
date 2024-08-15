@@ -4,6 +4,10 @@ build: generate
 test:
 	@go test -v ./...
 
+cover:
+	@go test -coverprofile=bin/coverage.out ./...
+	@go tool cover -html=bin/coverage.out -o=bin/coverage.html
+
 run: build
 	@./bin/tm
 
