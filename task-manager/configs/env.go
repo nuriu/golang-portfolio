@@ -31,7 +31,7 @@ func loadConfig() Config {
 	return Config{
 		Host:             getEnvironmentVariableStr("HOST", "localhost"),
 		Port:             getEnvironmentVariableStr("PORT", "8080"),
-		JWTSecret:        getEnvironmentVariableStr("PORT", "SECRET"),
+		JWTSecret:        getEnvironmentVariableStr("JWT_SECRET", "SECRET"),
 		SqliteDB:         getEnvironmentVariableStr("SQLITE_DB", "bin/test.db"),
 		postgresHost:     getEnvironmentVariableStr("POSTGRES_HOST", "postgres"),
 		postgresPort:     getEnvironmentVariableStr("POSTGRES_PORT", "5432"),
