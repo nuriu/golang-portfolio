@@ -2,6 +2,7 @@ package configs
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 
@@ -20,12 +21,29 @@ type Config struct {
 	postgresDatabase string
 }
 
-var Environment = loadConfig()
+var Environment Config
 
-func loadConfig() Config {
+func init() {
+	var err error
+	Environment, err = loadConfig()
+	if err != nil {
+		log.Fatalf("Error when loading config: %v", err)
+	}
+}
+
+func loadEnv() error {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Couldn't load environment file.")
+		return fmt.Errorf("failed to load .env file: %w", err)
+	}
+	return nil
+
+}
+
+func loadConfig() (Config, error) {
+	err := loadEnv()
+	if err != nil {
+		return Config{}, fmt.Errorf("failed to load environment: %w", err)
 	}
 
 	return Config{
@@ -38,7 +56,7 @@ func loadConfig() Config {
 		postgresUser:     getEnvironmentVariableStr("POSTGRES_USER", "postgres"),
 		postgresPassword: getEnvironmentVariableStr("POSTGRES_PASSWORD", "postgres"),
 		postgresDatabase: getEnvironmentVariableStr("POSTGRES_DB", "taskmanager"),
-	}
+	}, nil
 }
 
 func getEnvironmentVariableStr(key string, fallbackValue string) string {
