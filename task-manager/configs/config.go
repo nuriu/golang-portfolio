@@ -25,14 +25,18 @@ var Environment Config
 
 func init() {
 	var err error
-	Environment, err = loadConfig()
+	Environment, err = LoadConfig()
 	if err != nil {
 		log.Fatalf("Error when loading config: %v", err)
 	}
 }
 
-func loadEnv() error {
-	err := godotenv.Load()
+func loadEnv(envFileName string) error {
+	if envFileName == "" {
+		envFileName = "../.env"
+	}
+
+	err := godotenv.Load(envFileName)
 	if err != nil {
 		return fmt.Errorf("failed to load .env file: %w", err)
 	}
@@ -40,26 +44,26 @@ func loadEnv() error {
 
 }
 
-func loadConfig() (Config, error) {
-	err := loadEnv()
+func LoadConfig() (Config, error) {
+	err := loadEnv("../.env")
 	if err != nil {
 		return Config{}, fmt.Errorf("failed to load environment: %w", err)
 	}
 
 	return Config{
-		Host:             getEnvironmentVariableStr("HOST", "localhost"),
-		Port:             getEnvironmentVariableStr("PORT", "8080"),
-		JWTSecret:        getEnvironmentVariableStr("JWT_SECRET", "SECRET"),
-		SqliteDB:         getEnvironmentVariableStr("SQLITE_DB", "bin/test.db"),
-		postgresHost:     getEnvironmentVariableStr("POSTGRES_HOST", "postgres"),
-		postgresPort:     getEnvironmentVariableStr("POSTGRES_PORT", "5432"),
-		postgresUser:     getEnvironmentVariableStr("POSTGRES_USER", "postgres"),
-		postgresPassword: getEnvironmentVariableStr("POSTGRES_PASSWORD", "postgres"),
-		postgresDatabase: getEnvironmentVariableStr("POSTGRES_DB", "taskmanager"),
+		Host:             GetEnvironmentVariableStr("HOST", "localhost"),
+		Port:             GetEnvironmentVariableStr("PORT", "8080"),
+		JWTSecret:        GetEnvironmentVariableStr("JWT_SECRET", "SECRET"),
+		SqliteDB:         GetEnvironmentVariableStr("SQLITE_DB", "bin/test.db"),
+		postgresHost:     GetEnvironmentVariableStr("POSTGRES_HOST", "postgres"),
+		postgresPort:     GetEnvironmentVariableStr("POSTGRES_PORT", "5432"),
+		postgresUser:     GetEnvironmentVariableStr("POSTGRES_USER", "postgres"),
+		postgresPassword: GetEnvironmentVariableStr("POSTGRES_PASSWORD", "postgres"),
+		postgresDatabase: GetEnvironmentVariableStr("POSTGRES_DB", "taskmanager"),
 	}, nil
 }
 
-func getEnvironmentVariableStr(key string, fallbackValue string) string {
+func GetEnvironmentVariableStr(key string, fallbackValue string) string {
 	if value, ok := os.LookupEnv(key); ok {
 		return value
 	}
