@@ -21,7 +21,7 @@ func TestUserService(t *testing.T) {
 	email := "test@test.com"
 	pass := "test"
 
-	t.Run("CreateUser should not create an user with empty email or empty password", func(t *testing.T) {
+	t.Run("CreateUser should not create an user with empty email", func(t *testing.T) {
 		createdUser, err := userService.CreateUser("", pass)
 
 		if err == nil {
@@ -35,8 +35,10 @@ func TestUserService(t *testing.T) {
 		if err != user.ErrorUserEmailEmpty {
 			t.Errorf("CreateUser should return %s when received an empty email", user.ErrorUserEmailEmpty.Error())
 		}
+	})
 
-		createdUser, err = userService.CreateUser(email, "")
+	t.Run("CreateUser should not create an user with empty password", func(t *testing.T) {
+		createdUser, err := userService.CreateUser(email, "")
 
 		if err == nil {
 			t.Error("CreateUser should return error when received an empty password")
@@ -67,7 +69,7 @@ func TestUserService(t *testing.T) {
 		}
 	})
 
-	t.Run("CreateUser should return correct error when user exists", func(t *testing.T) {
+	t.Run("CreateUser should return ErrorUserAlreadyExists when user exists", func(t *testing.T) {
 		createdUser, err := userService.CreateUser(email, pass)
 
 		if err == nil || createdUser != nil {
@@ -86,7 +88,7 @@ func TestUserService(t *testing.T) {
 			t.Error("GetUser should not return user data when email is empty")
 		}
 		if err != user.ErrorUserEmailEmpty {
-			t.Errorf("GetUser should return %s error when email is empty", user.ErrorUserEmailEmpty.Error())
+			t.Error("GetUser should return ErrorUserEmailEmpty when email is empty")
 		}
 	})
 
