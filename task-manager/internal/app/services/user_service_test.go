@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func setupTest() (user.UserService, error) {
+func setupUserServiceTests() (user.UserService, error) {
 	db, err := gorm.Open(gormSqlite.Open(":memory:"), &gorm.Config{})
 	if err != nil {
 		return nil, errors.New("failed to open sqlite db")
@@ -24,7 +24,7 @@ func setupTest() (user.UserService, error) {
 }
 
 func TestCreateUser(t *testing.T) {
-	userService, err := setupTest()
+	userService, err := setupUserServiceTests()
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -76,7 +76,7 @@ func TestCreateUser(t *testing.T) {
 		}
 
 		if createdUser == nil {
-			t.Error("CreateUser should be able to create a new user")
+			t.Error("CreateUser should return created user")
 		}
 	})
 
@@ -95,7 +95,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	userService, err := setupTest()
+	userService, err := setupUserServiceTests()
 	if err != nil {
 		t.Error(err.Error())
 	}
