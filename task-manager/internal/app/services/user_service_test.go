@@ -1,6 +1,7 @@
 package services_test
 
 import (
+	"errors"
 	"task-manager/internal/app/services"
 	"task-manager/internal/db/repositories"
 	"task-manager/internal/domain/user"
@@ -10,14 +11,24 @@ import (
 	"gorm.io/gorm"
 )
 
-func TestUserService(t *testing.T) {
+func setupTest() (user.UserService, error) {
 	db, err := gorm.Open(gormSqlite.Open(":memory:"), &gorm.Config{})
 	if err != nil {
-		t.Error("failed to open sqlite db")
+		return nil, errors.New("failed to open sqlite db")
 	}
 
 	userRepository := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepository)
+
+	return userService, nil
+}
+
+func TestCreateUser(t *testing.T) {
+	userService, err := setupTest()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
 	email := "test@test.com"
 	pass := "test"
 
@@ -81,6 +92,17 @@ func TestUserService(t *testing.T) {
 		}
 	})
 
+}
+
+func TestGetUser(t *testing.T) {
+	userService, err := setupTest()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	email := "test@test.com"
+	pass := "test"
+	_, _ = userService.CreateUser(email, pass)
 	t.Run("GetUser should not accept an empty email", func(t *testing.T) {
 		userDetail, err := userService.GetUser("")
 
