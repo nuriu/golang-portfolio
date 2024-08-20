@@ -7,16 +7,16 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserSqliteRepository struct {
+type UserGormRepository struct {
 	db *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) *UserSqliteRepository {
+func NewUserRepository(db *gorm.DB) *UserGormRepository {
 	db.AutoMigrate(&models.UserEntity{})
-	return &UserSqliteRepository{db: db}
+	return &UserGormRepository{db: db}
 }
 
-func (repository *UserSqliteRepository) Create(user *user.User) (*user.User, error) {
+func (repository *UserGormRepository) Create(user *user.User) (*user.User, error) {
 	dbUser := models.UserFromDomainEntity(user)
 
 	if err := repository.db.Create(dbUser).Error; err != nil {
@@ -31,7 +31,7 @@ func (repository *UserSqliteRepository) Create(user *user.User) (*user.User, err
 	return user, nil
 }
 
-func (repository *UserSqliteRepository) Get(email string) (*user.User, error) {
+func (repository *UserGormRepository) Get(email string) (*user.User, error) {
 	var dbUser models.UserEntity
 	if err := repository.db.Where(&user.User{Email: email}).First(&dbUser).Error; err != nil {
 		return nil, err
