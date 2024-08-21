@@ -43,6 +43,10 @@ func (t *TaskService) ListTasks(page int, pageSize int) (interface{}, error) {
 func (t *TaskService) GetTask(taskID uuid.UUID) (*task.Task, error) {
 	taskDetail, err := t.taskRepository.Get(taskID)
 	if err != nil {
+		if err.Error() == "record not found" {
+			return nil, task.ErrorTaskNotFound
+		}
+
 		return nil, err
 	}
 

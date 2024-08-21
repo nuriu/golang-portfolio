@@ -11,6 +11,7 @@ import (
 var (
 	ErrorTaskTitleEmpty       = domain.NewDomainError(400, "title is empty")
 	ErrorTaskDescriptionEmpty = domain.NewDomainError(400, "description is empty")
+	ErrorTaskNotFound         = domain.NewDomainError(404, "task not found")
 )
 
 type Task struct {
