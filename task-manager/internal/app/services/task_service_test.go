@@ -7,6 +7,7 @@ import (
 	"task-manager/internal/domain/task"
 	"testing"
 
+	"github.com/google/uuid"
 	gormSqlite "gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -73,4 +74,44 @@ func TestCreateTask(t *testing.T) {
 			t.Errorf("CreateUser should return %s when received an empty description", task.ErrorTaskDescriptionEmpty.Error())
 		}
 	})
+}
+
+func TestGetTask(t *testing.T) {
+	taskService, err := setupTakServiceTests()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	t.Run("GetTask should return correct error when task not exists", func(t *testing.T) {
+		id, _ := uuid.NewV7()
+		taskDetail, err := taskService.GetTask(id)
+		if err == nil {
+			t.Error("GetUser should return correct error when task not exists")
+		}
+
+		if taskDetail != nil {
+			t.Error("GetUser should not return any user data when task not exists")
+		}
+
+		if err != task.ErrorTaskNotFound {
+			t.Errorf("GetUser should return correct error when task not exists")
+		}
+	})
+
+	title, description := "title test", "description test"
+	createdTask, _ := taskService.CreateTask(title, description)
+
+	t.Run("GetTask should return correct task data", func(t *testing.T) {
+		taskDetail, err := taskService.GetTask(createdTask.ID)
+		if err != nil {
+			t.Error("GetTask should not return any error when task exists")
+		}
+
+		if taskDetail != nil {
+			if taskDetail.Title != createdTask.Title || taskDetail.Description != createdTask.Description {
+				t.Error("GetTask should return correct task data")
+			}
+		}
+	})
+
 }
