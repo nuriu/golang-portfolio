@@ -3,9 +3,11 @@ package services_test
 import (
 	"errors"
 	"task-manager/internal/app/services"
+	"task-manager/internal/db/models"
 	"task-manager/internal/db/repositories"
 	"task-manager/internal/domain/task"
 	"testing"
+	"time"
 
 	"github.com/google/uuid"
 	gormSqlite "gorm.io/driver/sqlite"
@@ -113,5 +115,54 @@ func TestGetTask(t *testing.T) {
 			}
 		}
 	})
+}
 
+func TestListTasks(t *testing.T) {
+	taskService, err := setupTakServiceTests()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	title, description := "title test", "description test"
+	title2, description2 := "title test 2", "description test 2"
+
+	createdTask, _ := taskService.CreateTask(title, description)
+	time.Sleep(500)
+	createdTask2, _ := taskService.CreateTask(title2, description2)
+
+	t.Run("ListTasks should return task list newer to older", func(t *testing.T) {
+		tasks, err := taskService.ListTasks(1, 10)
+		if err != nil {
+			t.Error("ListTasks should not return error when there are tasks")
+		}
+
+		paginatedModel := tasks.(models.PaginatedModel)
+		paginatedTasks := paginatedModel.Data.([]models.TaskEntity)
+
+		for i, taskDetail := range paginatedTasks {
+			if i == 0 && taskDetail.Title != createdTask2.Title {
+				t.Error("error 1")
+			}
+			if i == 1 && taskDetail.Title != createdTask.Title {
+				t.Error("error 2")
+			}
+		}
+	})
+}
+
+func TestDeleteTask(t *testing.T) {
+	taskService, err := setupTakServiceTests()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	title, description := "title test", "description test"
+	createdTask, _ := taskService.CreateTask(title, description)
+
+	t.Run("DeleTask should delete the task with given ID", func(t *testing.T) {
+		err := taskService.DeleteTask(createdTask.ID)
+		if err != nil {
+			t.Error("DeleTask should not return error when there are task to delete")
+		}
+	})
 }
