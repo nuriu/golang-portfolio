@@ -2,6 +2,7 @@ package models
 
 import (
 	"task-manager/internal/domain/user"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -35,12 +36,17 @@ func UserFromDomainEntity(u *user.User) *UserEntity {
 }
 
 func (ue *UserEntity) ToDomainEntity() *user.User {
+	var deletedAt *time.Time = nil
+	if ue.DeletedAt.Valid {
+		deletedAt = &ue.DeletedAt.Time
+	}
+
 	return &user.User{
 		ID:        ue.ID,
 		Email:     ue.Email,
 		Password:  ue.Password,
 		CreatedAt: ue.CreatedAt,
 		UpdatedAt: ue.UpdatedAt,
-		DeletedAt: &ue.DeletedAt.Time,
+		DeletedAt: deletedAt,
 	}
 }

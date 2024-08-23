@@ -2,6 +2,7 @@ package models
 
 import (
 	"task-manager/internal/domain/task"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -36,12 +37,17 @@ func TaskFromDomainEntity(t *task.Task) *TaskEntity {
 }
 
 func (te *TaskEntity) ToDomainEntity() *task.Task {
+	var deletedAt *time.Time = nil
+	if te.DeletedAt.Valid {
+		deletedAt = &te.DeletedAt.Time
+	}
+
 	return &task.Task{
 		ID:          te.ID,
 		Title:       te.Title,
 		Description: te.Description,
 		CreatedAt:   te.CreatedAt,
 		UpdatedAt:   te.UpdatedAt,
-		DeletedAt:   &te.DeletedAt.Time,
+		DeletedAt:   deletedAt,
 	}
 }
