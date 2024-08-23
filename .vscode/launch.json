@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/task-manager/cmd/api/main.go",
-            "cwd": "${workspaceFolder}/task-manager"
+            "cwd": "${workspaceFolder}/task-manager/cmd/"
         }
     ]
 }
