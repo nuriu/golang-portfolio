@@ -9,4 +9,5 @@ type TaskRepository interface {
 	List(page int, pageSize int) (interface{}, error)
 	Get(id uuid.UUID) (*Task, error)
 	Delete(id uuid.UUID) error
+	Update(id uuid.UUID, task *Task)
 }

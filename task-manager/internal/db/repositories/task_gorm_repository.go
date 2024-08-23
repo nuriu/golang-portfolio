@@ -59,3 +59,8 @@ func (repository *TaskGormRepository) Get(id uuid.UUID) (*task.Task, error) {
 func (repository *TaskGormRepository) Delete(id uuid.UUID) error {
 	return repository.db.Delete(&models.TaskEntity{}, id).Error
 }
+
+func (repository *TaskGormRepository) Update(id uuid.UUID, task *task.Task) {
+	dbModel := models.TaskFromDomainEntity(task)
+	repository.db.Save(&dbModel)
+}

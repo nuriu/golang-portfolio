@@ -65,6 +65,19 @@ func (t *TaskService) DeleteTask(taskID uuid.UUID) error {
 
 // UpdateTask implements task.TaskService.
 func (t *TaskService) UpdateTask(taskID uuid.UUID, title string, description string) error {
-	// TODO: update to user taskRepository
-	panic("unimplemented")
+	taskDetail, err := t.taskRepository.Get(taskID)
+	if err != nil {
+		if err.Error() == "record not found" {
+			return task.ErrorTaskNotFound
+		}
+
+		return err
+	}
+
+	taskDetail.UpdateTitle(title)
+	taskDetail.UpdateDescription(description)
+
+	t.taskRepository.Update(taskDetail.ID, taskDetail)
+
+	return nil
 }

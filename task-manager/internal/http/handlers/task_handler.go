@@ -23,6 +23,7 @@ func (handler *TaskHandler) RegisterRoutes(group *echo.Group, routePrefix string
 	group.POST(routePrefix, handler.createTaskHandler)
 	group.GET(routePrefix+"/:id", handler.getTaskHandler)
 	group.DELETE(routePrefix+"/:id", handler.deleteTaskHandler)
+	group.PUT(routePrefix+"/:id", handler.updateTaskHandler)
 }
 
 // @Router /api/v1/tasks [get]
@@ -127,6 +128,38 @@ func (handler *TaskHandler) deleteTaskHandler(c echo.Context) error {
 	err = handler.service.DeleteTask(id)
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.NoContent(http.StatusNoContent)
+}
+
+// @Router /api/v1/tasks/{id} [put]
+// @Summary Update Task
+// @Description Updates existing task
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Param id path string true "Task ID" Format(uuid)
+// @Param Request body models.UpdateTaskRequest true "title and description"
+// @Success 204
+// @Failure 400
+// @Failure 401
+// @Failure 500
+func (handler *TaskHandler) updateTaskHandler(c echo.Context) error {
+	id, err := uuid.Parse(c.Param("id"))
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	model := new(models.UpdateTaskRequest)
+
+	if err := c.Bind(model); err != nil {
+		return c.String(http.StatusBadRequest, "Bad Request")
+	}
+
+	err = handler.service.UpdateTask(id, model.Title, model.Description)
+	if err != nil {
+		return err
 	}
 
 	return c.NoContent(http.StatusNoContent)
