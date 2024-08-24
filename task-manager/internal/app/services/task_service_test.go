@@ -159,10 +159,41 @@ func TestDeleteTask(t *testing.T) {
 	title, description := "title test", "description test"
 	createdTask, _ := taskService.CreateTask(title, description)
 
-	t.Run("DeleTask should delete the task with given ID", func(t *testing.T) {
+	t.Run("DeleteTask should delete the task with given ID", func(t *testing.T) {
 		err := taskService.DeleteTask(createdTask.ID)
 		if err != nil {
-			t.Error("DeleTask should not return error when there are task to delete")
+			t.Error("DeleteTask should not return error when there are task to delete")
+		}
+	})
+}
+
+func TestUpdateTask(t *testing.T) {
+	taskService, err := setupTakServiceTests()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	title, description := "title test", "description test"
+	createdTask, _ := taskService.CreateTask(title, description)
+
+	t.Run("UpdateTask should update the task with given ID", func(t *testing.T) {
+		newTitle, newDescription := "update title test", "update description test"
+		err := taskService.UpdateTask(createdTask.ID, newTitle, newDescription)
+		if err != nil {
+			t.Error("UpdateTask should not return error when there are task to update")
+		}
+	})
+
+	t.Run("UpdateTask should return ErrorTaskNotFound when task with given ID does not exists", func(t *testing.T) {
+		newTitle, newDescription := "update title test", "update description test"
+		id, _ := uuid.NewV7()
+		err := taskService.UpdateTask(id, newTitle, newDescription)
+		if err == nil {
+			t.Error("UpdateTask should return error when task with given ID does not exists")
+		}
+
+		if err != task.ErrorTaskNotFound {
+			t.Error("UpdateTask should return ErrorTaskNotFound when task with given ID does not exists")
 		}
 	})
 }
